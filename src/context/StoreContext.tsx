@@ -206,8 +206,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     (productId, size, color, qty = 1) => {
       const product = products.find((p) => p.id === productId);
       if (!product) return;
-      const chosenSize = size ?? product.sizes[0];
-      const chosenColor = color ?? product.colors[0];
+      const chosenSize = size ?? product.sizes[0] ?? "Free Size";
+      const chosenColor = color ?? product.colors[0] ?? "As Shown";
       setCart((prev) => {
         const idx = prev.findIndex(
           (l) =>
@@ -217,7 +217,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         );
         if (idx >= 0) {
           const next = [...prev];
-          next[idx] = { ...next[idx], qty: next[idx].qty + qty };
+          const line = next[idx]!;
+          next[idx] = { ...line, qty: line.qty + qty };
           return next;
         }
         return [...prev, { productId, size: chosenSize, color: chosenColor, qty }];
@@ -382,7 +383,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const target = idx + direction;
       if (idx < 0 || target < 0 || target >= sorted.length) return prev;
       const swapped = [...sorted];
-      [swapped[idx], swapped[target]] = [swapped[target], swapped[idx]];
+      [swapped[idx], swapped[target]] = [swapped[target]!, swapped[idx]!];
       return swapped.map((c, i) => ({ ...c, order: i + 1 }));
     });
   }, []);

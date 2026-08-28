@@ -30,9 +30,9 @@ export function SectionHeading({
   intro,
   align = "center",
 }: {
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  intro?: string;
+  intro?: string | undefined;
   align?: "center" | "left";
 }) {
   const alignment = align === "center" ? "text-center mx-auto" : "text-left";

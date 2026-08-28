@@ -5,9 +5,10 @@ import { ShopBrowser } from "../components/ShopBrowser";
 import { useStore } from "../context/StoreContext";
 
 export const Route = createFileRoute("/shop")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    q: typeof search.q === "string" && search.q ? search.q : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { q?: string } => {
+    const q = search["q"];
+    return typeof q === "string" && q ? { q } : {};
+  },
   head: () => ({
     meta: [
       { title: "Shop All Collections | Bombay Cloth Center, Gadhinglaj" },
@@ -28,8 +29,9 @@ export const Route = createFileRoute("/shop")({
 });
 
 function ShopPage() {
-  const { q } = Route.useSearch();
+  const search = Route.useSearch();
   const { products } = useStore();
+  const q = search.q ?? "";
 
   return (
     <SiteLayout>
@@ -41,9 +43,9 @@ function ShopPage() {
       />
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
         <ShopBrowser
-          key={q ?? "all"}
+          key={q}
           pool={products.filter((p) => p.status === "Active")}
-          initialQuery={q ?? ""}
+          initialQuery={q}
         />
       </div>
     </SiteLayout>

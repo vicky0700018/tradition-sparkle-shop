@@ -54,7 +54,7 @@ export const categories: Category[] = defs.map(([name, group], index) => {
     name,
     slug,
     group,
-    image: categoryImages[slug] ?? categoryImages.sarees,
+    image: categoryImages[slug] ?? categoryImages["sarees"]!,
     enabled: true,
     order: index + 1,
   };
