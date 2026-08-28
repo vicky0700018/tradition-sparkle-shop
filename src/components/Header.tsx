@@ -43,7 +43,7 @@ export function Header() {
     e.preventDefault();
     setSearchOpen(false);
     setMenuOpen(false);
-    navigate({ to: "/shop", search: { q: term || undefined } });
+    navigate({ to: "/shop", search: term ? { q: term } : {} });
   };
 
   return (
