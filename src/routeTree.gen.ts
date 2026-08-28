@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MenRouteImport } from './routes/men'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as WomenRouteImport } from './routes/women'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 
@@ -19,9 +21,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MenRoute = MenRouteImport.update({
+  id: '/men',
+  path: '/men',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WomenRoute = WomenRouteImport.update({
+  id: '/women',
+  path: '/women',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategorySlugRoute = CategorySlugRouteImport.update({
@@ -37,34 +49,50 @@ const ProductIdRoute = ProductIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/men': typeof MenRoute
   '/shop': typeof ShopRoute
+  '/women': typeof WomenRoute
   '/category/$slug': typeof CategorySlugRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/men': typeof MenRoute
   '/shop': typeof ShopRoute
+  '/women': typeof WomenRoute
   '/category/$slug': typeof CategorySlugRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/men': typeof MenRoute
   '/shop': typeof ShopRoute
+  '/women': typeof WomenRoute
   '/category/$slug': typeof CategorySlugRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/shop' | '/category/$slug' | '/product/$id'
+  fullPaths:
+    '/' | '/men' | '/shop' | '/women' | '/category/$slug' | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/shop' | '/category/$slug' | '/product/$id'
-  id: '__root__' | '/' | '/shop' | '/category/$slug' | '/product/$id'
+  to: '/' | '/men' | '/shop' | '/women' | '/category/$slug' | '/product/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/men'
+    | '/shop'
+    | '/women'
+    | '/category/$slug'
+    | '/product/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MenRoute: typeof MenRoute
   ShopRoute: typeof ShopRoute
+  WomenRoute: typeof WomenRoute
   CategorySlugRoute: typeof CategorySlugRoute
   ProductIdRoute: typeof ProductIdRoute
 }
@@ -78,11 +106,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/men': {
+      id: '/men'
+      path: '/men'
+      fullPath: '/men'
+      preLoaderRoute: typeof MenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/women': {
+      id: '/women'
+      path: '/women'
+      fullPath: '/women'
+      preLoaderRoute: typeof WomenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/category/$slug': {
@@ -104,7 +146,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MenRoute: MenRoute,
   ShopRoute: ShopRoute,
+  WomenRoute: WomenRoute,
   CategorySlugRoute: CategorySlugRoute,
   ProductIdRoute: ProductIdRoute,
 }
